@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a53c2d2a-7963-4e26-9a09-5c3a1643faad" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NeuralNet.py" afterPath="$PROJECT_DIR$/NeuralNet.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,8 +20,8 @@
       <file leaf-file-name="NeuralNet.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NeuralNet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-319">
-              <caret line="33" column="25" lean-forward="false" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
+            <state relative-caret-position="431">
+              <caret line="195" column="19" lean-forward="false" selection-start-line="195" selection-start-column="19" selection-end-line="195" selection-end-column="19" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -62,9 +62,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="3" />
-    <option name="y" value="127" />
-    <option name="width" value="727" />
+    <option name="x" value="405" />
+    <option name="y" value="54" />
+    <option name="width" value="958" />
     <option name="height" value="711" />
   </component>
   <component name="ProjectView">
@@ -340,10 +340,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="3" y="127" width="727" height="711" extended-state="0" />
+    <frame x="405" y="54" width="958" height="711" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15130673" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.114822544" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -371,7 +371,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -432,8 +432,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NeuralNet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-319">
-          <caret line="33" column="25" lean-forward="false" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
+        <state relative-caret-position="431">
+          <caret line="195" column="19" lean-forward="false" selection-start-line="195" selection-start-column="19" selection-end-line="195" selection-end-column="19" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>

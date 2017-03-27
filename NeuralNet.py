@@ -168,7 +168,7 @@ for i in range(epochs):
         gradients[j] = nabla(network, raw_outs, example_outs[j])
         # calculate true output of each output node
         outlayer = map(sigma, raw_outs[-1])
-        ##print outlayer, example_outs[j]
+        # print outlayer, example_outs[j]
         # calculate cost over each output node and sum
         cost_per_ex = reduce(lambda x, y:x+y, map(lambda x: .5* float(abs(x))**2.0,np.subtract(outlayer,example_outs[j])))
         ##print cost_per_ex
@@ -192,6 +192,8 @@ plt.subplot(212)
 for i in range(len(weights[0])):
     plt.plot(indices, [net[i] for net in weights][1:], label="w"+str(i+1))
 plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=2,ncol=9, mode="expand", borderaxespad=0.)
+print network
+print flatten(network)
 plt.show()
 
 print("Press enter to quit")
