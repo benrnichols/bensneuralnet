@@ -5,6 +5,11 @@ import matplotlib.pyplot as plt
 from functools import reduce
 
 
+def flatten(net):
+    flat1 = sum(net, [])
+    return sum(flat1, [])
+
+
 def sigma(num):
     return 1.0/(1.0+exp(-1.0*num))
 
@@ -38,7 +43,7 @@ def initnet(layerlens, in_len, out_len):
             weights[j] = np.random.uniform(0.0, 1.0)
         layer[k]=weights
     network[-1] = layer
-    print network
+    #print network
     return network    #return [[[0.268907371619032, 0.945546627056832, 0.263108481983011], [0.219475552278563, 0.226349368036303, 0.69172099025921]], [[0.760209364555744, 0.31324794300938, 0.395712319541701]]]
 
 
@@ -113,6 +118,7 @@ example_ins = [x[0:in_len] for x in ex_data]
 example_outs = [x[in_len:] for x in ex_data]
 indices =[]
 costs = []
+weights = [None]*epochs
 for i in range(epochs):
     gradients = [None]*ex_num
     raws_outs = [None]*ex_num
@@ -132,11 +138,18 @@ for i in range(epochs):
     modify(network, gradients, example_ins, raws_outs, learn_rate)
     indices.append(i)
     costs.append(cost_accumulator)
-    if i % 10 == 0 :
-        print cost_accumulator
+    #if i % 10 == 0 :
+       # print cost_accumulator
+    weights[i] = flatten(network)
+#print weights[0]
 indices = indices[1:]
 costs = costs[1:]
+fig1 = plt.figure(1)
+plt.subplot(211)
 plt.plot(indices, costs)
+plt.subplot(212)
+for i in range(len(weights[0])):
+    plt.plot(indices, [net[i] for net in weights][1:])
 plt.show()
 
 print("Press enter to quit")
