@@ -27,29 +27,29 @@ def sigprime(num):
 # in_len is the number of inputs
 # out_len is the number of output nodes
 def initnet(layerlens, in_len, out_len):
-    network = [None] * (len(layerlens)+1)
+    network = np.empty(len(layerlens)+1)
     for i in range(len(layerlens)):
-        layer = [None] * layerlens[i]
+        layer = np.empty(layerlens[i])
         if(i==0):
             #special case for first hidden layer
             for k in range(layerlens[i]):
-                weights = [None] *(in_len+1)
+                weights = np.empty(in_len+1)
                 for j in range(in_len+1):
                     weights[j]= np.random.uniform(0.0,1.0)
                 layer[k] = weights
         else:
             for k in range(layerlens[i]):
                 #each node has a number of weights equal to the previous layers number of nodes plus the bias
-                weights = [None] *(layerlens[i-1]+1)
+                weights = np.empty(layerlens[i-1]+1)
                 for j in range(layerlens[i-1]+1):
                     weights[j] = np.random.uniform(0.0, 1.0)
                 layer[k] = weights
         network[i] = layer
-    layer = [None]*out_len
+    layer = np.empty(out_len)
     #special case for output layer
     for k in range(out_len):
         #fails with no hidden layer
-        weights= [None] * (layerlens[-1]+1)
+        weights= np.empty(layerlens[-1]+1)
         for j in range(layerlens[-1]+1):
             weights[j] = np.random.uniform(0.0, 1.0)
         layer[k]=weights
@@ -63,16 +63,16 @@ def initnet(layerlens, in_len, out_len):
 def feed_forward(network, example_in) :
     layers = len(network)
     #instantiate this way so you can use assignment (appending lists to lists gives weird resutls)
-    raw_outs = [None]*(layers)
+    raw_outs = np.empty(layers)
     for i in range(layers):
         if i ==0:
-            nodeouts =[None]*len(network[i])
+            nodeouts = np.empty(len(network[i]))
             for j in range(len(network[i])):
                 # +[1] serves to add the always 1 input of the bias term
                 nodeouts[j] = np.dot(network[i][j], example_in+[1])
             raw_outs [i] = nodeouts
         else:
-            nodeouts = [None] * len(network[i])
+            nodeouts = np.empty(len(network[i]))
             for j in range(len(network[i])):
                 # must apply the sigma function in order to feed forward
                 nodeouts[j] = np.dot(network[i][j], map(sigma, raw_outs[i-1])+[1])
@@ -130,71 +130,73 @@ def modify(network, gradient, example_ins, raw_outs, learning_rate):
                 network[i][j][k] += -1.0*learning_rate*avg_weightchange
     return network
 
-print("Please input the length of the input, followed by the number of outputs,"
-      " followed by the number of training examples")
-(in_len, out_len, ex_num) =map(int,raw_input().split())
-print("Please enter the name of the file that holds the examples")
-filename = raw_input()
-ex_data = [None]*ex_num
-infile = open(filename, 'r')
-for i in range(ex_num):
-    ex_data[i] = map(float, infile.readline().split())
-print("Please enter the number of nodes you would like in each hidden layer")
-##i.e. if you want 3 layers with 2 nodes each input 2 2 2
-layerlens = map(int, raw_input().split())
-network = initnet(layerlens, in_len, out_len)
-print("How many epochs would you like to perform?")
-epochs = int(raw_input())
-print("What would you like the learning rate to be?")
-learn_rate = float(raw_input())
-#slice the inputs and outputs into separate arrays
-example_ins = [x[0:in_len] for x in ex_data]
-example_outs = [x[in_len:] for x in ex_data]
-#track indices and costs for plotting purposes
-indices =[]
-costs = []
-weights = [None]*epochs
-for i in range(epochs):
-    gradients = [None]*ex_num
-    raws_outs = [None]*ex_num
-    cost_accumulator =0.0
-    for j in range(ex_num):
-        # calculate the raw outs of every node
-        raw_outs = feed_forward(network, example_ins[j])
-        raws_outs[j] = raw_outs
-        #print raw_outs
-        #print network
-        # calculate the gradient of each node on this training example
-        gradients[j] = nabla(network, raw_outs, example_outs[j])
-        # calculate true output of each output node
-        outlayer = map(sigma, raw_outs[-1])
-        # print outlayer, example_outs[j]
-        # calculate cost over each output node and sum
-        cost_per_ex = reduce(lambda x, y:x+y, map(lambda x: .5* float(abs(x))**2.0,np.subtract(outlayer,example_outs[j])))
-        ##print cost_per_ex
-        cost_accumulator += cost_per_ex
-    # modify the network weights using the data from this batch
-    modify(network, gradients, example_ins, raws_outs, learn_rate)
-    # for graphing purposes
-    indices.append(i)
-    costs.append(cost_accumulator)
-    #if i % 10 == 0 :
-       # print cost_accumulator
-    #for graphing purposes
-    weights[i] = flatten(network)
-# for plotting purposes
-indices = indices[1:]
-costs = costs[1:]
-fig1 = plt.figure(1)
-plt.subplot(211)
-plt.plot(indices, costs)
-plt.subplot(212)
-for i in range(len(weights[0])):
-    plt.plot(indices, [net[i] for net in weights][1:], label="w"+str(i+1))
-plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=2,ncol=9, mode="expand", borderaxespad=0.)
-print network
-print flatten(network)
-plt.show()
+if __name__ == "__main__":
 
-print("Press enter to quit")
-i = raw_input()
+    print("Please input the length of the input, followed by the number of outputs,"
+          " followed by the number of training examples")
+    (in_len, out_len, ex_num) =map(int,raw_input().split())
+    print("Please enter the name of the file that holds the examples")
+    filename = raw_input()
+    ex_data = np.empty(ex_num)
+    infile = open(filename, 'r')
+    for i in range(ex_num):
+        ex_data[i] = map(float, infile.readline().split())
+        print("Please enter the number of nodes you would like in each hidden layer")
+        ##i.e. if you want 3 layers with 2 nodes each input 2 2 2
+    layerlens = map(int, raw_input().split())
+    network = initnet(layerlens, in_len, out_len)
+    print("How many epochs would you like to perform?")
+    epochs = int(raw_input())
+    print("What would you like the learning rate to be?")
+    learn_rate = float(raw_input())
+    #slice the inputs and outputs into separate arrays
+    example_ins = [x[0:in_len] for x in ex_data]
+    example_outs = [x[in_len:] for x in ex_data]
+    #track indices and costs for plotting purposes
+    indices =[]
+    costs = []
+    weights = np.empty(epochs)
+    for i in range(epochs):
+        gradients = np.empty(ex_num)
+        raws_outs = np.empty(ex_num)
+        cost_accumulator =0.0
+        for j in range(ex_num):
+            # calculate the raw outs of every node
+            raw_outs = feed_forward(network, example_ins[j])
+            raws_outs[j] = raw_outs
+            #print raw_outs
+            #print network
+            # calculate the gradient of each node on this training example
+            gradients[j] = nabla(network, raw_outs, example_outs[j])
+            # calculate true output of each output node
+            outlayer = map(sigma, raw_outs[-1])
+            # print outlayer, example_outs[j]
+            # calculate cost over each output node and sum
+            cost_per_ex = reduce(lambda x, y:x+y, map(lambda x: .5* float(abs(x))**2.0,np.subtract(outlayer,example_outs[j])))
+            ##print cost_per_ex
+            cost_accumulator += cost_per_ex
+        # modify the network weights using the data from this batch
+        modify(network, gradients, example_ins, raws_outs, learn_rate)
+        # for graphing purposes
+        indices.append(i)
+        costs.append(cost_accumulator)
+        #if i % 10 == 0 :
+           # print cost_accumulator
+        #for graphing purposes
+        weights[i] = flatten(network)
+    # for plotting purposes
+    indices = indices[1:]
+    costs = costs[1:]
+    fig1 = plt.figure(1)
+    plt.subplot(211)
+    plt.plot(indices, costs)
+    plt.subplot(212)
+    for i in range(len(weights[0])):
+        plt.plot(indices, [net[i] for net in weights][1:], label="w"+str(i+1))
+    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=2,ncol=9, mode="expand", borderaxespad=0.)
+    print network
+    print flatten(network)
+    plt.show()
+
+    print("Press enter to quit")
+    i = raw_input()
